@@ -1,0 +1,33 @@
+# STACK
+
+# REGS
+
+# FLAGS
+
+# SEED
+
+# MODE
+MTRIG: DEG
+MFMT: FIX 6
+FN= M
+
+# EQUATION LIST
+EQNPTR: 0
+EQN
+ P \mul; 100 \mul; ( 1 - ( 1 + I \div; 100 ) ^ - N ) \div; I + F \mul; ( 1 + I \div; 100 ) ^ - N + B
+ P \mul; ( ( 1 + ( I \div; 100 ) \div; N ) ^ N - 1 ) \div; ( ( I \div; 100 ) \div; N )
+EQNEND
+
+# PROGRAM
+PTR: 0
+PGM
+  LBL M
+  SF 11
+  EQN: ( P \mul; 100 \mul; Y \div; I - F ) \mul; ( 1 + I \div; Y \div; 100 ) ^ - N - P \mul; 100 \mul; Y \div; I - B
+  RTN
+  LBL K
+  1/x
+  %
+  1/x
+  RTN
+PGMEND
