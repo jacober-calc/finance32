@@ -68,7 +68,7 @@ They are related by the TVM equation, where i is the interest rate per period as
 B + P × (1 − (1 + i)^−N) ÷ i + F × (1 + i)^−N = 0
 ```
 
-The first term is the money at the start, the second the present value of all the payments, and the third the present value of the amount at the end. Given any four values, SOLVE finds the fifth.
+The first term is the money at the start, the second the present value of all the payments, and the third the present value of the amount at the end. Given any four values, SOLVE finds the fifth. In LBL M, Y (payments per year) is a sixth variable, and SOLVE can find it too.
 
 ### 2.3 Sign Convention
 
@@ -156,7 +156,7 @@ LBL K uses the stack only.
 
 ### 4.1 LBL M - TVM Solver, Annual Rate
 
-- **Use:** `[SOLVE]` followed by the unknown variable (N, I, B, P, or F, also Y). LBL M is selected as the SOLVE function in the Statefile.
+- **Use:** `[SOLVE]` followed by the unknown, which can be any of the six variables: N, I, Y, B, P, or F. LBL M is selected as the SOLVE function (FN= M) in the Statefile, so it is never run with `[XEQ]`.
 - **Prompts:** P?, Y?, I?, F?, N?, B?, in that order, skipping the unknown
 - **Output:** The unknown, displayed as, for example, P=
 
@@ -191,7 +191,7 @@ Load FINANCE from the Available States list (`[F4]`) or the File menu (section 1
 
 ```
 1. If solving for I, press 1 [STO] [I]           (I must not be 0)
-2. Press [SOLVE] and the unknown, for example [SOLVE] [P]
+2. Press [SOLVE] and the unknown: [N], [I], [Y], [B], [P] or [F]
 3. Key in each prompted value and press [R/S]
    (press [R/S] alone to keep the value shown)
 4. Read the result, for example P=-408.182401
@@ -394,8 +394,8 @@ LBL K leaves the total in the y-register. Pressing `[←]` before the next part 
 
 | Tool | Function | How | Prompts | Output |
 |------|----------|-----|---------|--------|
-| **LBL M** | TVM, annual rate | `[SOLVE]` var | P, Y, I, F, N, B | The unknown |
-| **Equation 1** | TVM, periodic rate | `[EQN]`, `[SOLVE]` var | P, I, N, F, B | The unknown |
+| **LBL M** | TVM, annual rate | `[SOLVE]` N, I, Y, B, P or F | P, Y, I, F, N, B | The unknown |
+| **Equation 1** | TVM, periodic rate | `[EQN]`, `[SOLVE]` N, I, B, P or F | P, I, N, F, B | The unknown |
 | **Equation 2** | Annuity future value | `[EQN]`, `[XEQ]` | P, I, N | X: future value |
 | **LBL K** | Percent of total | total `[ENTER]` part `[XEQ] [K]` | None | Y: total, X: percent |
 
@@ -405,7 +405,7 @@ LBL K leaves the total in the y-register. Pressing `[←]` before the next part 
 - I must not be 0, or the TVM equations stop with DIVIDE BY 0; store 1 in I before solving for I
 - In LBL M, I is the annual rate and Y the number of payments per year; in Equation 1, I is the rate per period
 - Payments are made at the end of each period
-- SOLVE in Calculator mode uses FN= M; SOLVE with the Equation list open uses the equation shown
+- LBL M is used only with SOLVE, which can solve it for any of its six variables; SOLVE in Calculator mode uses FN= M, while SOLVE with the Equation list open uses the equation shown
 - If FN= has been changed by another program, press `[FN=] [M]` before solving
 - A fractional N means the last payment is smaller than the others (Example 6.5)
 - LBL K stops with DIVIDE BY 0 if the part or the total is 0
